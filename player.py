@@ -152,7 +152,10 @@ class PlayerLives:
         x = self.__x + self.lives_left_text.width + FONT_CHAR_WIDTH
         y = self.__y
 
-        for _ in range(0, value - 1):
+        for i in range(0, value - 1):
+            if i >= 16:
+                break
+
             life = PlayerDummy(self.context, x, y)
             self.lives.append(life)
 

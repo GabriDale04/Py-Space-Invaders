@@ -21,6 +21,7 @@ PLAYER_HEIGHT                       = 40
 PLAYER_COLOR                        = (100, 100, 100)
 
 PLAYER_SPEED                        = 7
+PLAYER_BASE_LIVES                   = 3
 
 PLAYER_SPAWN_POS_X                  = MAP_LEFT_BOUND
 PLAYER_SPAWN_POS_Y                  = MAP_BOTTOM_BOUND - PLAYER_WIDTH - 25
