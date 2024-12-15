@@ -138,7 +138,10 @@ class PlayerLives:
         self.lives_left_text = Text(context, MAP_LEFT_BOUND, LIVES_LEFT_TEXT_TOP_OFFSET, LIVES_LEFT_TEXT)
         self.lives : list[PlayerDummy] = []
     
-    def set_lives(self, value : int):
+    def get(self) -> int:
+        return len(self.lives) + 1
+
+    def set(self, value : int):
         for life in self.lives:
             life.destroy()
         

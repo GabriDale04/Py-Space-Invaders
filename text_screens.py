@@ -3,7 +3,8 @@ from space_invaders import SpaceInvadersObject
 from config import (
     WINDOW_HEIGHT,
     GAME_OVER_TYPING_TIME_SPAN,
-    SCORE_TABLE_TYPING_TIME_SPAN
+    SCORE_TABLE_TYPING_TIME_SPAN,
+    SCORE_INSERT_COIN_TYPING_TIME_SPAN
 )
 
 import scene
@@ -60,6 +61,43 @@ class AdvancedPointsTableScreen:
     def update(self):
         if self.displayed_objects < len(self.objects):
             if get_ticks() - self.last_object_display >= SCORE_TABLE_TYPING_TIME_SPAN:
+                self.displayed_objects += 1
+                self.last_object_display = get_ticks()
+        
+        for i in range(0, self.displayed_objects):
+            self.objects[i].update()
+
+class InsertCoinScreen:
+    def __init__(self):
+        self.displayed_objects = 0
+        self.last_object_display = 0
+
+        self.objects : list[SpaceInvadersObject] = []
+
+        self.objects.extend(
+            scene.insert_coin_text.characters +
+            scene.one_or_two_players_text.characters +
+            scene.one_player_cost_text.characters +
+            scene.two_players_cost_text.characters
+        )
+
+        self.__center_vertically()
+    
+    def __center_vertically(self):
+        first = self.objects[0]
+        last = self.objects[len(self.objects) - 1]
+
+        total_height = last.rect.y + last.rect.width - first.rect.y
+
+        start_y = WINDOW_HEIGHT // 2 - total_height // 2
+        sub = first.rect.y
+
+        for obj in self.objects:
+            obj.rect.y = start_y + obj.rect.y - sub
+
+    def update(self):
+        if self.displayed_objects < len(self.objects):
+            if get_ticks() - self.last_object_display >= SCORE_INSERT_COIN_TYPING_TIME_SPAN:
                 self.displayed_objects += 1
                 self.last_object_display = get_ticks()
         

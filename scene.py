@@ -65,7 +65,7 @@ game_over_text.x               -= game_over_text.width // 2
 # 'score_advanced_table_context' manages the points table that is shown before the game starts
 score_advanced_table_context   = Context()
 
-play_text                      = Text(score_advanced_table_context, config.WINDOW_WIDTH // 2, config.SCORE_TABLE_TOP_OFFSET, config.PLAY_TEXT)
+play_text                      = Text(score_advanced_table_context, config.WINDOW_WIDTH // 2, 0, config.PLAY_TEXT)
 play_text.x                    -= play_text.width // 2
 
 space_invaders_text            = Text(score_advanced_table_context, config.WINDOW_WIDTH // 2, play_text.y + config.FONT_CHAR_HEIGHT * 4, config.SPACE_INVADERS_TEXT)
@@ -90,3 +90,18 @@ android_alien_dummy.rect.x     = android_alien_points_text.x - android_alien_dum
 skull_alien_dummy              = AlienDummy(score_advanced_table_context, 0, android_alien_points_text.y + config.FONT_CHAR_HEIGHT * 2, "skull")
 skull_alien_points_text        = Text(score_advanced_table_context, mystery_alien_points_text.x, skull_alien_dummy.rect.y, config.SKULL_POINTS_TEXT)
 skull_alien_dummy.rect.x       = skull_alien_points_text.x - skull_alien_dummy.rect.width - (mystery_alien_dummy.rect.width - skull_alien_dummy.rect.width) // 2
+
+# 'insert_coin_context' manages the coin insertion screen to play the arcade
+insert_coin_context            = Context()
+
+insert_coin_text               = Text(insert_coin_context, config.WINDOW_WIDTH // 2, 0, config.INSERT_COIN_TEXT)
+insert_coin_text.x             -= insert_coin_text.width // 2
+
+one_or_two_players_text        = Text(insert_coin_context, config.WINDOW_WIDTH // 2, insert_coin_text.y + config.FONT_CHAR_HEIGHT * 4, config.ONE_OR_TWO_PLAYERS_TEXT)
+one_or_two_players_text.x      -= one_or_two_players_text.width // 2
+
+one_player_cost_text           = Text(insert_coin_context, config.WINDOW_WIDTH // 2, one_or_two_players_text.y + config.FONT_CHAR_HEIGHT * 3, config.ONE_PLAYER_COST_TEXT)
+one_player_cost_text.x         -= one_player_cost_text.width // 2
+
+two_players_cost_text          = Text(insert_coin_context, config.WINDOW_WIDTH // 2, one_player_cost_text.y + config.FONT_CHAR_HEIGHT * 3, config.TWO_PLAYERS_COST_TEXT)
+two_players_cost_text.x        -= two_players_cost_text.width // 2

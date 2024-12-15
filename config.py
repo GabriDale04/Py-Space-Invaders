@@ -176,13 +176,17 @@ SCORE2_TEXT                         = "0000"
 CREDIT_TEXT                         = "CREDIT 00"
 LIVES_LEFT_TEXT                     = "0"
 GAME_OVER_TEXT                      = "GAME OVER"
-PLAY_TEXT                           = "PLAY"
+PLAY_TEXT                           = "PLAY <I>"
 SPACE_INVADERS_TEXT                 = "SPACE INVADERS"
 SCORE_TABLE_TEXT                    = "*SCORE ADVANCED TABLE*"
 MYSTERY_POINTS_TEXT                 = "=? MYSTERY"
 JELLYFISH_POINTS_TEXT               = "=30 POINTS"
 ANDROID_POINTS_TEXT                 = "=20 POINTS"
 SKULL_POINTS_TEXT                   = "=10 POINTS"
+INSERT_COIN_TEXT                    = "INSERT COIN <I>"
+ONE_OR_TWO_PLAYERS_TEXT             = "<1 OR 2 PLAYERS>"
+ONE_PLAYER_COST_TEXT                = "*1 PLAYER  1 COIN"
+TWO_PLAYERS_COST_TEXT               = "*2 PLAYERS 2 COINS"
 
 SCORE1_LABEL_TEXT_TOP_OFFSET        = 25
 HI_SCORE_LABEL_TEXT_TOP_OFFSET      = 25
@@ -197,12 +201,11 @@ BOTTOM_LINE_COLOR                   = (0, 255, 0)
 BOTTOM_LINE_TOP_OFFSET              = LIVES_LEFT_TEXT_TOP_OFFSET - BOTTOM_LINE_HEIGHT - TEXT_CHARS_GAP
 BOTTOM_LINE_LEFT_OFFSET             = MAP_LEFT_BOUND
 
-GAME_OVER_TEXT_TOP_OFFSET           = MAP_TOP_BOUND + 100
-
-SCORE_TABLE_TOP_OFFSET              = 0
+GAME_OVER_TEXT_TOP_OFFSET           = MAP_TOP_BOUND
 
 GAME_OVER_TYPING_TIME_SPAN          = 200
 SCORE_TABLE_TYPING_TIME_SPAN        = 100
+SCORE_INSERT_COIN_TYPING_TIME_SPAN  = 100
 
 # [DEBUG]
 DEBUG_SHOW_RECTS                    = False
