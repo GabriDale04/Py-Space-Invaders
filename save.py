@@ -20,16 +20,16 @@ def save_file_exists() -> bool:
     return True
 
 def read_score() -> int:
-    with open("savefiles/hi_score") as file:
-        score = 0
-        line = file.readline()
+    if save_file_exists():
+        with open("savefiles/hi_score") as file:
+            score = 0
+            line = file.readline()
 
-        try:
-            score = int(line)
-        except ValueError:
-            pass
+            try:
+                score = int(line)
+            except ValueError:
+                pass
         
-    return score
+        return score
 
-def write_score():
-    pass
+    return 0
