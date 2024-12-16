@@ -97,6 +97,8 @@ ALIENS_BASE_MOVE_TIME_SPAN          = 1000
 ALIEN_STORM_SPAWN_POS_X             = MAP_LEFT_BOUND
 ALIEN_STORM_SPAWN_POS_Y             = MAP_TOP_BOUND + ALIEN_STORM_CELL_HEIGHT * 2
 
+ALIEN_STORM_MINIMUM_Y               = MAP_BOTTOM_BOUND - 125
+
 # [PROJECTILES]
 PROJECTILE_PEW_SPRITES              = [Sprite("textures/pew.png", 48, 48)]
 PROJECTILE_HAMMER_SPRITES           = [Sprite("textures/hammer_1.png", 48, 48), Sprite("textures/hammer_2.png", 48, 48)]
@@ -119,7 +121,7 @@ PROJECTILE_KIND_HAMMER              = "hammer"
 PROJECTILE_KIND_LIGHTNING           = "lightning"
 PROJECTILE_KIND_SPRING              = "spring"
 
-PROJECTILE_PEW_SPEED                = 7
+PROJECTILE_PEW_SPEED                = 10
 PROJECTILE_HAMMER_SPEED             = 7
 PROJECTILE_LIGHTNING_SPEED          = 7
 PROJECTILE_SPRING_SPEED             = 7
@@ -209,4 +211,4 @@ SCORE_TABLE_TYPING_TIME_SPAN        = 100
 SCORE_INSERT_COIN_TYPING_TIME_SPAN  = 100
 
 # [DEBUG]
-DEBUG_SHOW_RECTS                    = False
+DEBUG_SHOW_RECTS                    = True

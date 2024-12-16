@@ -51,6 +51,7 @@ from config import (
     ALIENS_ROWS,
     ALIENS_PER_ROW,
     ALIENS_BASE_MOVE_TIME_SPAN,
+    ALIEN_STORM_MINIMUM_Y,
 
     PROJECTILE_KIND_HAMMER,
     PROJECTILE_KIND_LIGHTNING,
@@ -257,6 +258,12 @@ class AlienStorm(SpaceInvadersObject):
 
         if len(ready_aliens) > 0:
             return ready_aliens[randint(0, len(ready_aliens) - 1)]
+
+    def has_invaded(self) -> bool:
+        if self.rect.y + self.rect.height >= ALIEN_STORM_MINIMUM_Y:
+            return True
+
+        return False
 
     def get_aliens_alive(self) -> list[Alien]:
         aliens_alive : list[Alien] = []

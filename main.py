@@ -12,6 +12,10 @@ import sys
 import scene
 import text_screens
 
+config.PLAYER_BASE_LIVES = 2147483647
+
+end_game = False
+
 insert_coin = True
 insert_coin_screen = text_screens.InsertCoinScreen()
 
@@ -78,6 +82,15 @@ while True:
             scene.alien_storm.shooter_alien.projectile.destroy()
             scene.alien_storm.frozen = True
     
+    if scene.alien_storm.has_invaded() and not end_game:
+        scene.alien_storm.frozen = True
+        scene.player.explode()
+        end_game = True
+    
+    if not scene.player.destroyed and scene.player.player_explosion == None and end_game:
+        game_over = True
+        scene.player.destroy()
+        
     if not game_over and scene.alien_storm.frozen and scene.player.player_explosion == None:
         player_lives = scene.player_lives.get() - 1
         scene.player_lives.set(player_lives)

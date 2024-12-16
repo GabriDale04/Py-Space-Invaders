@@ -103,5 +103,4 @@ one_or_two_players_text.x      -= one_or_two_players_text.width // 2
 one_player_cost_text           = Text(insert_coin_context, config.WINDOW_WIDTH // 2, one_or_two_players_text.y + config.FONT_CHAR_HEIGHT * 3, config.ONE_PLAYER_COST_TEXT)
 one_player_cost_text.x         -= one_player_cost_text.width // 2
 
-two_players_cost_text          = Text(insert_coin_context, config.WINDOW_WIDTH // 2, one_player_cost_text.y + config.FONT_CHAR_HEIGHT * 3, config.TWO_PLAYERS_COST_TEXT)
-two_players_cost_text.x        -= two_players_cost_text.width // 2
+two_players_cost_text          = Text(insert_coin_context, one_player_cost_text.x, one_player_cost_text.y + config.FONT_CHAR_HEIGHT * 3, config.TWO_PLAYERS_COST_TEXT)
