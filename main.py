@@ -11,6 +11,7 @@ display_window(config.WINDOW_TITLE)
 import sys
 import scene
 import text_screens
+import save
 
 score = 0
 
@@ -27,6 +28,7 @@ score_table_screen = text_screens.AdvancedPointsTableScreen()
 game_over = False
 game_over_screen = text_screens.GameOverScreen()
 
+scene.hi_score_text.set_text(str(save.read_score()).zfill(4))
 scene.player_lives.set(config.PLAYER_BASE_LIVES)
 
 while True:
@@ -102,6 +104,7 @@ while True:
         if not scene.player.destroyed and scene.player.player_explosion == None and end_game:
             game_over = True
             scene.player.destroy()
+            save.save_hi_score(score)
             
         if not game_over and scene.alien_storm.frozen and scene.player.player_explosion == None:
             player_lives = scene.player_lives.get() - 1
@@ -110,6 +113,7 @@ while True:
             if player_lives == 0:
                 game_over = True
                 scene.player.destroy()
+                save.save_hi_score(score)
             else:
                 scene.alien_storm.frozen = False
     elif wave_clear and pygame.time.get_ticks() - wave_clear_time >= config.WAVE_CLEAR_DURATION:
