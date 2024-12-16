@@ -52,8 +52,6 @@ class Player(SpaceInvadersObject):
             animations = PLAYER_SPRITES
         )
 
-        self.points = 0
-
         self.projectile : Projectile = None
         self.player_explosion : PlayerExplosion = None
 

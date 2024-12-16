@@ -12,6 +12,8 @@ import sys
 import scene
 import text_screens
 
+score = 0
+
 end_game = False
 wave_clear = False
 wave_clear_time = 0
@@ -76,8 +78,8 @@ while True:
                     scene.player.projectile.destroy()
 
                     pop = alien.pop()
-                    scene.player.points += pop
-                    scene.score1_text.set_text(str(scene.player.points).zfill(4))
+                    score += pop
+                    scene.score1_text.set_text(str(score).zfill(4))
 
                     if len(alive_aliens) == 1:
                         wave_clear = True
