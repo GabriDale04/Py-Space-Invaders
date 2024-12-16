@@ -127,8 +127,7 @@ class Alien(SpaceInvadersObject):
         self.animate()
 
     def shoot(self):
-        if self.projectile == None:
-            self.projectile = Projectile(self.context, self.rect.x + self.rect.width // 2, self.rect.y, self.projectile_kind, DOWN)
+        self.projectile = Projectile(self.context, self.rect.x + self.rect.width // 2, self.rect.y, self.projectile_kind, DOWN)
 
     def pop(self) -> int:
         AlienPop(self.context, self.rect.x, self.rect.y, get_ticks())
@@ -187,6 +186,7 @@ class AlienStorm(SpaceInvadersObject):
 
     def update(self):
         super().update()
+        self.compress_wave()
 
         if not self.frozen:
             if get_ticks() - self.last_move_time >= ALIENS_BASE_MOVE_TIME_SPAN:
@@ -246,7 +246,7 @@ class AlienStorm(SpaceInvadersObject):
         for x in range(0, ALIENS_PER_ROW):
             ready_alien : Alien = None
 
-            for y in range(0, ALIENS_ROWS):
+            for y in range(0, len(self.aliens)):
                 alien = self.aliens[y][x]
                 if alien != None and not alien.destroyed:
                     ready_alien = alien
@@ -258,6 +258,14 @@ class AlienStorm(SpaceInvadersObject):
 
         if len(ready_aliens) > 0:
             return ready_aliens[randint(0, len(ready_aliens) - 1)]
+
+    def compress_wave(self):
+        for x in range(0, ALIENS_PER_ROW):
+            if self.aliens[len(self.aliens) - 1][x] != None:
+                return
+            
+        self.aliens.pop()
+        self.rect.height = ALIEN_STORM_CELL_WIDTH * len(self.aliens) + (len(self.aliens) - 1) * ALIEN_STORM_GAP
 
     def has_invaded(self) -> bool:
         if self.rect.y + self.rect.height >= ALIEN_STORM_MINIMUM_Y:

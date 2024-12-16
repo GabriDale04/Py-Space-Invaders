@@ -51,7 +51,7 @@ class Player(SpaceInvadersObject):
             color = PLAYER_COLOR,
             animations = PLAYER_SPRITES
         )
-        
+
         self.points = 0
 
         self.projectile : Projectile = None
