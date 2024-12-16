@@ -211,4 +211,4 @@ SCORE_TABLE_TYPING_TIME_SPAN        = 100
 SCORE_INSERT_COIN_TYPING_TIME_SPAN  = 100
 
 # [DEBUG]
-DEBUG_SHOW_RECTS                    = True
+DEBUG_SHOW_RECTS                    = False

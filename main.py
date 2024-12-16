@@ -12,8 +12,6 @@ import sys
 import scene
 import text_screens
 
-config.PLAYER_BASE_LIVES = 2147483647
-
 end_game = False
 
 insert_coin = True
