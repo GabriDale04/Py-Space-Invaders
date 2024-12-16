@@ -8,6 +8,7 @@ clock = pygame.time.Clock()
 init_window(config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
 display_window(config.WINDOW_TITLE)
 
+from misc import short
 import sys
 import scene
 import text_screens
@@ -28,6 +29,8 @@ score_table_screen = text_screens.AdvancedPointsTableScreen()
 game_over = False
 game_over_screen = text_screens.GameOverScreen()
 
+scene.score1_text.set_text(str(score).zfill(4))
+scene.score2_text.set_text(str(0).zfill(4))
 scene.hi_score_text.set_text(str(save.read_score()).zfill(4))
 scene.player_lives.set(config.PLAYER_BASE_LIVES)
 
@@ -81,7 +84,7 @@ while True:
 
                     pop = alien.pop()
                     score += pop
-                    scene.score1_text.set_text(str(score).zfill(4))
+                    scene.score1_text.set_text(str(short(score)).zfill(4))
 
                     if len(alive_aliens) == 1:
                         wave_clear = True

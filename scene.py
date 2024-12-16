@@ -1,30 +1,9 @@
 import config
 from pizza import Context
-from space_invaders import SpaceInvadersObject
 from player import Player, PlayerLives
 from alien import AlienStorm, AlienDummy
 from text import Text
-
-class BottomLine(SpaceInvadersObject):
-    def __init__(
-            self,
-            context : Context,
-            x : int,
-            y : int
-        ):
-
-        super().__init__(
-            context = context,
-            width = config.BOTTOM_LINE_WIDTH,
-            height = config.BOTTOM_LINE_HEIGHT,
-            x = x,
-            y = y,
-            color = config.BOTTOM_LINE_COLOR
-        )
-    
-    def update(self):
-        super().update()
-        self.draw_rect()
+from misc import BottomLine
 
 def new_alien_storm() -> AlienStorm:
     return AlienStorm(game_context, config.ALIEN_STORM_SPAWN_POS_X, config.ALIEN_STORM_SPAWN_POS_Y)
