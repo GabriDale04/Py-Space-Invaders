@@ -260,6 +260,9 @@ class AlienStorm(SpaceInvadersObject):
             return ready_aliens[randint(0, len(ready_aliens) - 1)]
 
     def compress_wave(self):
+        if len(self.aliens) == 0:
+            return
+
         for x in range(0, ALIENS_PER_ROW):
             if self.aliens[len(self.aliens) - 1][x] != None:
                 return
