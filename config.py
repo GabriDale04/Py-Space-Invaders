@@ -99,6 +99,8 @@ ALIEN_STORM_SPAWN_POS_Y             = MAP_TOP_BOUND + ALIEN_STORM_CELL_HEIGHT * 
 
 ALIEN_STORM_MINIMUM_Y               = MAP_BOTTOM_BOUND - 125
 
+WAVE_CLEAR_DURATION                 = 3000
+
 # [PROJECTILES]
 PROJECTILE_PEW_SPRITES              = [Sprite("textures/pew.png", 48, 48)]
 PROJECTILE_HAMMER_SPRITES           = [Sprite("textures/hammer_1.png", 48, 48), Sprite("textures/hammer_2.png", 48, 48)]
@@ -122,9 +124,9 @@ PROJECTILE_KIND_LIGHTNING           = "lightning"
 PROJECTILE_KIND_SPRING              = "spring"
 
 PROJECTILE_PEW_SPEED                = 10
-PROJECTILE_HAMMER_SPEED             = 7
+PROJECTILE_HAMMER_SPEED             = 5
 PROJECTILE_LIGHTNING_SPEED          = 7
-PROJECTILE_SPRING_SPEED             = 7
+PROJECTILE_SPRING_SPEED             = 6
 
 PROJECTILE_ANIMATION_DURATION       = 50
 

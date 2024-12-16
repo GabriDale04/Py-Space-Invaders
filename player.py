@@ -56,7 +56,9 @@ class Player(SpaceInvadersObject):
 
         self.projectile : Projectile = None
         self.player_explosion : PlayerExplosion = None
-    
+
+        self.frozen = False
+
     def update(self):
         super().update()
 
@@ -68,20 +70,22 @@ class Player(SpaceInvadersObject):
             self.player_explosion = None
 
     def move(self, direction : str):
-        if direction == LEFT:
-            if self.rect.x - PLAYER_SPEED <= MAP_LEFT_BOUND:
-                self.rect.x = MAP_LEFT_BOUND
-            else:
-                self.rect.x -= PLAYER_SPEED
-        elif direction == RIGHT:
-            if self.rect.x + PLAYER_WIDTH + PLAYER_SPEED >= MAP_RIGHT_BOUND:
-                self.rect.x = MAP_RIGHT_BOUND - PLAYER_WIDTH
-            else:
-                self.rect.x += PLAYER_SPEED
+        if not self.frozen:
+            if direction == LEFT:
+                if self.rect.x - PLAYER_SPEED <= MAP_LEFT_BOUND:
+                    self.rect.x = MAP_LEFT_BOUND
+                else:
+                    self.rect.x -= PLAYER_SPEED
+            elif direction == RIGHT:
+                if self.rect.x + PLAYER_WIDTH + PLAYER_SPEED >= MAP_RIGHT_BOUND:
+                    self.rect.x = MAP_RIGHT_BOUND - PLAYER_WIDTH
+                else:
+                    self.rect.x += PLAYER_SPEED
     
     def shoot(self):
-        if self.projectile == None:
-            self.projectile = Projectile(self.context, self.rect.x + self.rect.width // 2, self.rect.y, PROJECTILE_KIND_PEW, UP)
+        if not self.frozen:
+            if self.projectile == None:
+                self.projectile = Projectile(self.context, self.rect.x + self.rect.width // 2, self.rect.y, PROJECTILE_KIND_PEW, UP)
 
     def explode(self):
         self.player_explosion = PlayerExplosion(self.context, self.rect.x, self.rect.y, get_ticks())

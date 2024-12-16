@@ -26,6 +26,12 @@ class BottomLine(SpaceInvadersObject):
         super().update()
         self.draw_rect()
 
+def new_alien_storm() -> AlienStorm:
+    return AlienStorm(game_context, config.ALIEN_STORM_SPAWN_POS_X, config.ALIEN_STORM_SPAWN_POS_Y)
+
+def new_player() -> Player:
+    return Player(game_context, config.PLAYER_SPAWN_POS_X, config.PLAYER_SPAWN_POS_Y)
+
 # 'static_hud_context' manages the HUD game objects that are always displayed
 static_hud_context             = Context()
 

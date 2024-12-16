@@ -208,7 +208,7 @@ class AlienStorm(SpaceInvadersObject):
         for y in range(0, ALIENS_ROWS):
             aliens.append([])
             
-            alien_kind = "jellyfish" if y == 0 else "skull" if y == ALIENS_ROWS - 1 else "android"
+            alien_kind = "jellyfish" if y == 0 else "skull" if y >= ALIENS_ROWS - 2 else "android"
 
             for x in range(0, ALIENS_PER_ROW):
                 aliens[y].append(Alien(self.context, pos_x, pos_y, alien_kind))

@@ -13,6 +13,8 @@ import scene
 import text_screens
 
 end_game = False
+wave_clear = False
+wave_clear_time = 0
 
 insert_coin = True
 insert_coin_screen = text_screens.InsertCoinScreen()
@@ -65,39 +67,58 @@ while True:
     if game_over:
         game_over_screen.update()
 
-    if scene.player.projectile != None and not scene.player.projectile.destroyed:
-        for alien in scene.alien_storm.get_aliens_alive():
-            if alien.collide(scene.player.projectile):
-                scene.player.projectile.destroy()
-                pop = alien.pop()
-                scene.player.points += pop
-                scene.score1_text.set_text(str(scene.player.points).zfill(4))
-                break
-    
-    if scene.alien_storm.shooter_alien != None and scene.alien_storm.shooter_alien.projectile != None and not scene.alien_storm.shooter_alien.projectile.destroyed:
-        if scene.player.collide(scene.alien_storm.shooter_alien.projectile):
-            scene.player.explode()
-            scene.alien_storm.shooter_alien.projectile.destroy()
-            scene.alien_storm.frozen = True
-    
-    if scene.alien_storm.has_invaded() and not end_game:
-        scene.alien_storm.frozen = True
-        scene.player.explode()
-        end_game = True
-    
-    if not scene.player.destroyed and scene.player.player_explosion == None and end_game:
-        game_over = True
-        scene.player.destroy()
-        
-    if not game_over and scene.alien_storm.frozen and scene.player.player_explosion == None:
-        player_lives = scene.player_lives.get() - 1
-        scene.player_lives.set(player_lives)
+    if not wave_clear:
+        if scene.player.projectile != None and not scene.player.projectile.destroyed:
+            alive_aliens = scene.alien_storm.get_aliens_alive()
 
-        if player_lives == 0:
+            for alien in alive_aliens:
+                if alien.collide(scene.player.projectile):
+                    scene.player.projectile.destroy()
+
+                    pop = alien.pop()
+                    scene.player.points += pop
+                    scene.score1_text.set_text(str(scene.player.points).zfill(4))
+
+                    if len(alive_aliens) == 1:
+                        wave_clear = True
+                        wave_clear_time = pygame.time.get_ticks()
+                        scene.player.frozen = True
+
+                    break
+
+        if scene.alien_storm.shooter_alien != None and scene.alien_storm.shooter_alien.projectile != None and not scene.alien_storm.shooter_alien.projectile.destroyed:
+            if scene.player.collide(scene.alien_storm.shooter_alien.projectile):
+                scene.player.explode()
+                scene.alien_storm.shooter_alien.projectile.destroy()
+                scene.alien_storm.frozen = True
+    
+        if scene.alien_storm.has_invaded() and not end_game:
+            scene.alien_storm.frozen = True
+            scene.player.explode()
+            end_game = True
+        
+        if not scene.player.destroyed and scene.player.player_explosion == None and end_game:
             game_over = True
             scene.player.destroy()
-        else:
-            scene.alien_storm.frozen = False
+            
+        if not game_over and scene.alien_storm.frozen and scene.player.player_explosion == None:
+            player_lives = scene.player_lives.get() - 1
+            scene.player_lives.set(player_lives)
+
+            if player_lives == 0:
+                game_over = True
+                scene.player.destroy()
+            else:
+                scene.alien_storm.frozen = False
+    elif wave_clear and pygame.time.get_ticks() - wave_clear_time >= config.WAVE_CLEAR_DURATION:
+        wave_clear = False
+        wave_clear_time = 0
+
+        scene.alien_storm.destroy()
+        scene.player.destroy()
+
+        scene.alien_storm = scene.new_alien_storm()
+        scene.player = scene.new_player()
 
     pygame.display.flip()
 
