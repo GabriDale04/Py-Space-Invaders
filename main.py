@@ -12,8 +12,6 @@ import sys
 import scene
 import text_screens
 
-config.PLAYER_BASE_LIVES = 100
-
 insert_coin = True
 insert_coin_screen = text_screens.InsertCoinScreen()
 

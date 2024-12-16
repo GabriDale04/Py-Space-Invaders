@@ -54,7 +54,7 @@ player                         = Player(game_context, config.PLAYER_SPAWN_POS_X,
 
 bottom_line                    = BottomLine(game_context, config.BOTTOM_LINE_LEFT_OFFSET, config.BOTTOM_LINE_TOP_OFFSET)
 
-player_lives                   = PlayerLives(game_context, config.MAP_LEFT_BOUND, config.LIVES_LEFT_TEXT_TOP_OFFSET)
+player_lives                   = PlayerLives(game_context, config.MAP_LEFT_BOUND, config.LIVES_LEFT_TEXT_TOP_OFFSET, config.PLAYER_BASE_LIVES)
 
 # 'game_over_context' manages the HUD game objects shown once the player is defeated
 game_over_context              = Context()

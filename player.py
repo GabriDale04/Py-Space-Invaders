@@ -127,7 +127,8 @@ class PlayerLives:
             self,
             context,
             x : int,
-            y : int
+            y : int,
+            amount : int
         ):
 
         self.context = context
@@ -135,17 +136,21 @@ class PlayerLives:
         self.__x = x
         self.__y = y
 
+        self.__amount = amount
+
         self.lives_left_text = Text(context, MAP_LEFT_BOUND, LIVES_LEFT_TEXT_TOP_OFFSET, LIVES_LEFT_TEXT)
-        self.lives : list[PlayerDummy] = []
+        self.lives_icons : list[PlayerDummy] = []
     
     def get(self) -> int:
-        return len(self.lives) + 1
+        return self.__amount
 
     def set(self, value : int):
-        for life in self.lives:
+        for life in self.lives_icons:
             life.destroy()
         
-        self.lives = []
+        self.__amount = value
+
+        self.lives_icons = []
 
         self.lives_left_text.set_text(str(value))
 
@@ -157,7 +162,7 @@ class PlayerLives:
                 break
 
             life = PlayerDummy(self.context, x, y)
-            self.lives.append(life)
+            self.lives_icons.append(life)
 
             x += life.rect.width + life.rect.width // 4
 
