@@ -72,9 +72,12 @@ ALIEN_POP_DURATION                  = 250
 
 # [UFO]
 ALIEN_UFO_SPRITES                   = [Sprite("textures/ufo.png", 48, 48)]
+ALIEN_UFO_ATTACK_SPRITES            = [Sprite("textures/ufo_attack.png", 64, 64)]
 
 ALIEN_UFO_WIDTH                     = 48
 ALIEN_UFO_HEIGHT                    = 48
+ALIEN_UFO_ATTACK_WIDTH              = 48
+ALIEN_UFO_ATTACK_HEIGHT             = 32
 
 ALIEN_UFO_COLOR                     = (0, 0, 127)
 
@@ -88,7 +91,15 @@ ALIEN_UFO_TOP_OFFSET                = MAP_TOP_BOUND + ALIEN_UFO_HEIGHT
 ALIEN_UFO_LEFT_LIMIT                = MAP_LEFT_BOUND
 ALIEN_UFO_RIGHT_LIMIT               = MAP_RIGHT_BOUND
 
-ALIEN_UFO_SPAWN_FREQUENCY           = 5000#30000
+ALIEN_UFO_SPAWN_FREQUENCY           = 30000
+
+ALIEN_UFO_POP_SPRITES               = [Sprite("textures/ufo_pop.png", 64, 64)]
+ALIEN_UFO_POP_WIDTH                 = 48
+ALIEN_UFO_POP_HEIGHT                = 32
+
+ALIEN_UFO_POP_COLOR                 = (0, 255, 0)
+
+ALIEN_UFO_POP_DURATION              = 250
 
 # [ALIEN STORM]
 ALIEN_STORM_COLOR                   = (128, 0, 0)

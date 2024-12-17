@@ -26,8 +26,11 @@ from config import (
     ALIEN_SPEED,
 
     ALIEN_UFO_SPRITES,
+    ALIEN_UFO_ATTACK_SPRITES,
     ALIEN_UFO_WIDTH,
     ALIEN_UFO_HEIGHT,
+    ALIEN_UFO_ATTACK_WIDTH,
+    ALIEN_UFO_ATTACK_HEIGHT,
     ALIEN_UFO_COLOR,
     ALIEN_KIND_UFO,
     ALIEN_UFO_BASE_POP_REWARD,
@@ -42,6 +45,12 @@ from config import (
     ALIEN_POP_HEIGHT,
     ALIEN_POP_COLOR,  
     ALIEN_POP_DURATION,
+
+    ALIEN_UFO_POP_SPRITES,
+    ALIEN_UFO_POP_WIDTH,
+    ALIEN_UFO_POP_HEIGHT,
+    ALIEN_UFO_POP_COLOR,
+    ALIEN_UFO_POP_DURATION,
   
     ALIEN_STORM_COLOR,
     ALIEN_STORM_CELL_WIDTH,
@@ -180,32 +189,32 @@ class AlienStorm(SpaceInvadersObject):
             color = ALIEN_STORM_COLOR
         )
 
-        self.aliens : list[list[Alien]] = [] 
-
-        if not DEBUG_DONT_SPAWN_ALIENS:
-            self.aliens = self.invade()
-
+        self.aliens = self.invade()
         self.shooter_alien : Alien = None
         self.frozen = False
         self.move_direction = RIGHT
         self.last_move_time = 0
 
     def update(self):
-        super().update()
-        self.compress_wave()
+        if not DEBUG_DONT_SPAWN_ALIENS:
+            super().update()
+            self.compress_wave()
 
-        if not self.frozen:
-            if get_ticks() - self.last_move_time >= ALIENS_BASE_MOVE_TIME_SPAN:
-                self.move()
-                self.last_move_time = get_ticks()
+            if not self.frozen:
+                if get_ticks() - self.last_move_time >= ALIENS_BASE_MOVE_TIME_SPAN:
+                    self.move()
+                    self.last_move_time = get_ticks()
 
-            if self.shooter_alien == None or self.shooter_alien != None and self.shooter_alien.projectile == None or self.shooter_alien.projectile.destroyed:
-                self.shooter_alien = self.pick_shooter()
+                if self.shooter_alien == None or self.shooter_alien != None and self.shooter_alien.projectile == None or self.shooter_alien.projectile.destroyed:
+                    self.shooter_alien = self.pick_shooter()
 
-                if self.shooter_alien != None:
-                    self.shooter_alien.shoot()
+                    if self.shooter_alien != None:
+                        self.shooter_alien.shoot()
 
     def invade(self) -> list[list[Alien]]:
+        if DEBUG_DONT_SPAWN_ALIENS:
+            return []
+
         aliens : list[list[Alien]] = []
 
         pos_x = self.rect.x
@@ -369,12 +378,12 @@ class UFO(SpaceInvadersObject):
 
         super().__init__(
             context = context,
-            width = ALIEN_UFO_WIDTH,
-            height = ALIEN_UFO_HEIGHT,
+            width = ALIEN_UFO_ATTACK_WIDTH,
+            height = ALIEN_UFO_ATTACK_HEIGHT,
             x = x,
             y = y,
             color = ALIEN_UFO_COLOR,
-            animations = ALIEN_UFO_SPRITES
+            animations = ALIEN_UFO_ATTACK_SPRITES
         )
 
         self.direction = direction
@@ -397,5 +406,33 @@ class UFO(SpaceInvadersObject):
                 self.rect.x += ALIEN_UFO_SPEED
     
     def pop(self) -> int:
+        UFOPop(self.context, self.rect.x, self.rect.y, get_ticks())
         self.destroy()
         return self.pop_reward
+
+class UFOPop(SpaceInvadersObject):
+    def __init__(
+            self,
+            context,
+            x : int,
+            y : int,
+            start_time : int
+        ):
+    
+        super().__init__(
+            context = context,
+            width = ALIEN_UFO_POP_WIDTH,
+            height = ALIEN_UFO_POP_HEIGHT,
+            x = x,
+            y = y,
+            color = ALIEN_UFO_POP_COLOR,
+            animations = ALIEN_UFO_POP_SPRITES
+        )
+
+        self.start_time = start_time
+    
+    def update(self):
+        super().update()
+
+        if get_ticks() - self.start_time >= ALIEN_UFO_POP_DURATION:
+            self.destroy()

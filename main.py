@@ -14,8 +14,6 @@ import scene
 import text_screens
 import save
 
-config.PLAYER_BASE_LIVES = 32767
-
 score = 0
 
 end_game = False
@@ -81,7 +79,7 @@ while True:
         if scene.player.projectile != None and not scene.player.projectile.destroyed:
             if scene.ufo_spawner.ufo != None and scene.ufo_spawner.ufo.collide(scene.player.projectile):
                 scene.player.projectile.destroy()
-                
+
                 pop = scene.ufo_spawner.ufo.pop()
                 score += pop
                 scene.score1_text.set_text(str(short(score)).zfill(4))
