@@ -91,7 +91,7 @@ ALIEN_UFO_TOP_OFFSET                = MAP_TOP_BOUND + ALIEN_UFO_HEIGHT
 ALIEN_UFO_LEFT_LIMIT                = MAP_LEFT_BOUND
 ALIEN_UFO_RIGHT_LIMIT               = MAP_RIGHT_BOUND
 
-ALIEN_UFO_SPAWN_FREQUENCY           = 30000
+ALIEN_UFO_SPAWN_FREQUENCY           = 20000
 
 ALIEN_UFO_POP_SPRITES               = [Sprite("textures/ufo_pop.png", 64, 64)]
 ALIEN_UFO_POP_WIDTH                 = 48
@@ -231,5 +231,5 @@ SCORE_INSERT_COIN_TYPING_TIME_SPAN  = 100
 
 # [DEBUG]
 DEBUG_SHOW_RECTS                    = False
-DEBUG_DONT_SPAWN_ALIENS             = True
+DEBUG_DONT_SPAWN_ALIENS             = False
 DEBUG_DONT_SPAWN_UFOS               = False
