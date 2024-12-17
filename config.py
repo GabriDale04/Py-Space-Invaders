@@ -82,7 +82,7 @@ ALIEN_KIND_UFO                      = "ufo"
 
 ALIEN_UFO_BASE_POP_REWARD           = 100
 
-ALIEN_UFO_SPEED                     = 7
+ALIEN_UFO_SPEED                     = 2
 
 ALIEN_UFO_TOP_OFFSET                = MAP_TOP_BOUND + ALIEN_UFO_HEIGHT
 ALIEN_UFO_LEFT_LIMIT                = MAP_LEFT_BOUND
@@ -220,3 +220,5 @@ SCORE_INSERT_COIN_TYPING_TIME_SPAN  = 100
 
 # [DEBUG]
 DEBUG_SHOW_RECTS                    = False
+DEBUG_DONT_SPAWN_ALIENS             = True
+DEBUG_DONT_SPAWN_UFOS               = False

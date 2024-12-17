@@ -58,7 +58,10 @@ from config import (
 
     LEFT,
     RIGHT,
-    DOWN
+    DOWN,
+
+    DEBUG_DONT_SPAWN_ALIENS,
+    DEBUG_DONT_SPAWN_UFOS
 )
 
 class Alien(SpaceInvadersObject):
@@ -177,7 +180,11 @@ class AlienStorm(SpaceInvadersObject):
             color = ALIEN_STORM_COLOR
         )
 
-        self.aliens = self.invade()
+        self.aliens : list[list[Alien]] = [] 
+
+        if not DEBUG_DONT_SPAWN_ALIENS:
+            self.aliens = self.invade()
+
         self.shooter_alien : Alien = None
         self.frozen = False
         self.move_direction = RIGHT
@@ -337,14 +344,18 @@ class UFOSpawner:
         self.ufo : UFO = None
     
     def try_spawn_ufo(self):
-        if get_ticks() - self.last_spawn >= ALIEN_UFO_SPAWN_FREQUENCY:
-            spawn_pos = ALIEN_UFO_LEFT_LIMIT if self.direction == RIGHT else ALIEN_UFO_RIGHT_LIMIT
+        if not DEBUG_DONT_SPAWN_UFOS:
+            if self.ufo != None and self.ufo.destroyed:
+                self.ufo = None
 
-            self.ufo = UFO(self.context, spawn_pos, ALIEN_UFO_TOP_OFFSET, self.direction, self.pop_reward)
-            self.direction = RIGHT if self.direction == LEFT else LEFT
-            self.last_spawn = get_ticks()
+            if self.ufo == None and get_ticks() - self.last_spawn >= ALIEN_UFO_SPAWN_FREQUENCY:
+                spawn_pos = ALIEN_UFO_LEFT_LIMIT if self.direction == RIGHT else ALIEN_UFO_RIGHT_LIMIT
 
-            self.pop_reward += 5
+                self.ufo = UFO(self.context, spawn_pos, ALIEN_UFO_TOP_OFFSET, self.direction, self.pop_reward)
+                self.direction = RIGHT if self.direction == LEFT else LEFT
+                self.last_spawn = get_ticks()
+
+                self.pop_reward += 5
 
 class UFO(SpaceInvadersObject):
     def __init__(
@@ -368,3 +379,23 @@ class UFO(SpaceInvadersObject):
 
         self.direction = direction
         self.pop_reward = pop_reward
+    
+    def update(self):
+        super().update()
+        self.move()
+    
+    def move(self):
+        if self.direction == LEFT:
+            if self.rect.x - ALIEN_UFO_SPEED <= MAP_LEFT_BOUND:
+                self.destroy()
+            else:
+                self.rect.x -= ALIEN_UFO_SPEED
+        elif self.direction == RIGHT:
+            if self.rect.x + ALIEN_UFO_SPEED + self.rect.width >= MAP_RIGHT_BOUND:
+                self.destroy()
+            else:
+                self.rect.x += ALIEN_UFO_SPEED
+    
+    def pop(self) -> int:
+        self.destroy()
+        return self.pop_reward

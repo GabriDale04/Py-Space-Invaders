@@ -79,22 +79,29 @@ while True:
     if not (wave_clear or insert_coin or score_table):
         # Check collision with the player projectile and aliens
         if scene.player.projectile != None and not scene.player.projectile.destroyed:
-            alive_aliens = scene.alien_storm.get_aliens_alive()
+            if scene.ufo_spawner.ufo != None and scene.ufo_spawner.ufo.collide(scene.player.projectile):
+                scene.player.projectile.destroy()
+                
+                pop = scene.ufo_spawner.ufo.pop()
+                score += pop
+                scene.score1_text.set_text(str(short(score)).zfill(4))
+            else:
+                alive_aliens = scene.alien_storm.get_aliens_alive()
 
-            for alien in alive_aliens:
-                if alien.collide(scene.player.projectile):
-                    scene.player.projectile.destroy()
+                for alien in alive_aliens:
+                    if alien.collide(scene.player.projectile):
+                        scene.player.projectile.destroy()
 
-                    pop = alien.pop()
-                    score += pop
-                    scene.score1_text.set_text(str(short(score)).zfill(4))
+                        pop = alien.pop()
+                        score += pop
+                        scene.score1_text.set_text(str(short(score)).zfill(4))
 
-                    if len(alive_aliens) == 1:
-                        wave_clear = True
-                        wave_clear_time = pygame.time.get_ticks()
-                        scene.player.frozen = True
+                        if len(alive_aliens) == 1:
+                            wave_clear = True
+                            wave_clear_time = pygame.time.get_ticks()
+                            scene.player.frozen = True
 
-                    break
+                        break
         
         if scene.ufo_spawner.last_spawn == -1:
             scene.ufo_spawner.last_spawn = pygame.time.get_ticks()
@@ -143,7 +150,7 @@ while True:
         scene.alien_storm = scene.new_alien_storm()
         scene.player = scene.new_player()
 
-        scene.ufo_spawner.last_spawn = 0
+        scene.ufo_spawner.last_spawn = pygame.time.get_ticks()
 
     pygame.display.flip()
 
