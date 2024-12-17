@@ -10,41 +10,40 @@ from config import (
     ALIEN_JELLYFISH_SPRITES,
     ALIEN_ANDROID_SPRITES,
     ALIEN_SKULL_SPRITES,
-    ALIEN_UFO_SPRITES,
-
     ALIEN_JELLYFISH_WIDTH,
     ALIEN_JELLYFISH_HEIGHT,
     ALIEN_ANDROID_WIDTH,
     ALIEN_ANDROID_HEIGHT,
     ALIEN_SKULL_WIDTH,
     ALIEN_SKULL_HEIGHT,
-    ALIEN_UFO_WIDTH,
-    ALIEN_UFO_HEIGHT,
-
     ALIEN_COLOR,
-    ALIEN_UFO_COLOR,
-
     ALIEN_KIND_JELLYFISH,
     ALIEN_KIND_ANDROID,
     ALIEN_KIND_SKULL,
-    ALIEN_KIND_UFO,
-
     ALIEN_JELLYFISH_POP_REWARD,
     ALIEN_ANDROID_POP_REWARD,
     ALIEN_SKULL_POP_REWARD,
-
     ALIEN_SPEED,
+
+    ALIEN_UFO_SPRITES,
+    ALIEN_UFO_WIDTH,
+    ALIEN_UFO_HEIGHT,
+    ALIEN_UFO_COLOR,
+    ALIEN_KIND_UFO,
+    ALIEN_UFO_BASE_POP_REWARD,
+    ALIEN_UFO_SPEED,
+    ALIEN_UFO_TOP_OFFSET,
+    ALIEN_UFO_LEFT_LIMIT,
+    ALIEN_UFO_RIGHT_LIMIT,
+    ALIEN_UFO_SPAWN_FREQUENCY,
 
     ALIEN_POP_SPRITES,
     ALIEN_POP_WIDTH,
     ALIEN_POP_HEIGHT,
-
-    ALIEN_POP_COLOR,
-    
+    ALIEN_POP_COLOR,  
     ALIEN_POP_DURATION,
-    
+  
     ALIEN_STORM_COLOR,
-
     ALIEN_STORM_CELL_WIDTH,
     ALIEN_STORM_CELL_HEIGHT,
     ALIEN_STORM_GAP,
@@ -323,3 +322,49 @@ class AlienDummy(SpaceInvadersObject):
             color = ALIEN_UFO_COLOR if alien_kind == "ufo" else ALIEN_COLOR,
             animations = sprites
         )
+
+class UFOSpawner:
+    def __init__(
+            self,
+            context
+        ):
+
+        self.context = context
+        self.last_spawn = -1
+        self.direction = RIGHT
+        self.pop_reward = ALIEN_UFO_BASE_POP_REWARD
+
+        self.ufo : UFO = None
+    
+    def try_spawn_ufo(self):
+        if get_ticks() - self.last_spawn >= ALIEN_UFO_SPAWN_FREQUENCY:
+            spawn_pos = ALIEN_UFO_LEFT_LIMIT if self.direction == RIGHT else ALIEN_UFO_RIGHT_LIMIT
+
+            self.ufo = UFO(self.context, spawn_pos, ALIEN_UFO_TOP_OFFSET, self.direction, self.pop_reward)
+            self.direction = RIGHT if self.direction == LEFT else LEFT
+            self.last_spawn = get_ticks()
+
+            self.pop_reward += 5
+
+class UFO(SpaceInvadersObject):
+    def __init__(
+            self,
+            context,
+            x : int,
+            y : int,
+            direction : str,
+            pop_reward : int
+        ):
+
+        super().__init__(
+            context = context,
+            width = ALIEN_UFO_WIDTH,
+            height = ALIEN_UFO_HEIGHT,
+            x = x,
+            y = y,
+            color = ALIEN_UFO_COLOR,
+            animations = ALIEN_UFO_SPRITES
+        )
+
+        self.direction = direction
+        self.pop_reward = pop_reward

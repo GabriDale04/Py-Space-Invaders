@@ -1,7 +1,7 @@
 import config
 from pizza import Context
 from player import Player, PlayerLives
-from alien import AlienStorm, AlienDummy
+from alien import AlienStorm, AlienDummy, UFOSpawner
 from text import Text
 from misc import BottomLine
 
@@ -36,6 +36,7 @@ game_context                   = Context()
 
 alien_storm                    = AlienStorm(game_context, config.ALIEN_STORM_SPAWN_POS_X, config.ALIEN_STORM_SPAWN_POS_Y)
 player                         = Player(game_context, config.PLAYER_SPAWN_POS_X, config.PLAYER_SPAWN_POS_Y)
+ufo_spawner                    = UFOSpawner(game_context)
 
 bottom_line                    = BottomLine(game_context, config.BOTTOM_LINE_LEFT_OFFSET, config.BOTTOM_LINE_TOP_OFFSET)
 
