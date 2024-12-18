@@ -62,13 +62,26 @@ ALIEN_SKULL_POP_REWARD              = 10
 
 ALIEN_SPEED                         = 10
 
+# [ALIEN POP]
 ALIEN_POP_SPRITES                   = [Sprite("textures/pop.png", 48, 48)]
 ALIEN_POP_WIDTH                     = 39
 ALIEN_POP_HEIGHT                    = 39
 
-ALIEN_POP_COLOR                     = (0, 255, 0)
-
 ALIEN_POP_DURATION                  = 250
+
+ALIEN_UFO_POP_SPRITES               = [Sprite("textures/ufo_pop.png", 64, 64)]
+ALIEN_UFO_POP_WIDTH                 = 48
+ALIEN_UFO_POP_HEIGHT                = 32
+
+ALIEN_UFO_POP_DURATION              = 250
+ALIEN_UFO_POP_TEXT_INFO_DURATION    = 3000
+
+ALIEN_UFO_POP_TEXT_FONT_COLOR       = (255, 0, 0)
+
+ALIEN_POP_KIND_ALIEN                = "pop:alien"
+ALIEN_POP_KIND_UFO                  = "pop:ufo"                      
+
+ALIEN_POP_COLOR                     = (0, 255, 0)
 
 # [UFO]
 ALIEN_UFO_SPRITES                   = [Sprite("textures/ufo.png", 48, 48)]
@@ -92,14 +105,6 @@ ALIEN_UFO_LEFT_LIMIT                = MAP_LEFT_BOUND
 ALIEN_UFO_RIGHT_LIMIT               = MAP_RIGHT_BOUND
 
 ALIEN_UFO_SPAWN_FREQUENCY           = 20000
-
-ALIEN_UFO_POP_SPRITES               = [Sprite("textures/ufo_pop.png", 64, 64)]
-ALIEN_UFO_POP_WIDTH                 = 48
-ALIEN_UFO_POP_HEIGHT                = 32
-
-ALIEN_UFO_POP_COLOR                 = (0, 255, 0)
-
-ALIEN_UFO_POP_DURATION              = 250
 
 # [ALIEN STORM]
 ALIEN_STORM_COLOR                   = (128, 0, 0)

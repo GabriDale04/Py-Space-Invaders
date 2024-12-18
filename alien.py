@@ -2,6 +2,7 @@ from random import randint
 from pygame.time import get_ticks
 from space_invaders import SpaceInvadersObject
 from shooting import Projectile
+from text import Text
 
 from config import (
     MAP_LEFT_BOUND,
@@ -43,14 +44,19 @@ from config import (
     ALIEN_POP_SPRITES,
     ALIEN_POP_WIDTH,
     ALIEN_POP_HEIGHT,
-    ALIEN_POP_COLOR,  
     ALIEN_POP_DURATION,
 
     ALIEN_UFO_POP_SPRITES,
     ALIEN_UFO_POP_WIDTH,
     ALIEN_UFO_POP_HEIGHT,
-    ALIEN_UFO_POP_COLOR,
     ALIEN_UFO_POP_DURATION,
+    ALIEN_UFO_POP_TEXT_INFO_DURATION,
+    ALIEN_UFO_POP_TEXT_FONT_COLOR,
+
+    ALIEN_POP_COLOR,
+
+    ALIEN_POP_KIND_ALIEN,
+    ALIEN_POP_KIND_UFO,
   
     ALIEN_STORM_COLOR,
     ALIEN_STORM_CELL_WIDTH,
@@ -68,6 +74,8 @@ from config import (
     LEFT,
     RIGHT,
     DOWN,
+
+    FONT_CHAR_HEIGHT,
 
     DEBUG_DONT_SPAWN_ALIENS,
     DEBUG_DONT_SPAWN_UFOS
@@ -141,7 +149,7 @@ class Alien(SpaceInvadersObject):
         self.projectile = Projectile(self.context, self.rect.x + self.rect.width // 2, self.rect.y, self.projectile_kind, DOWN)
 
     def pop(self) -> int:
-        AlienPop(self.context, self.rect.x, self.rect.y, get_ticks())
+        AlienPop(self.context, self.rect.x, self.rect.y, ALIEN_POP_KIND_ALIEN, get_ticks())
         self.destroy()
         return self.pop_reward
 
@@ -151,25 +159,43 @@ class AlienPop(SpaceInvadersObject):
             context,
             x : int,
             y : int,
+            pop_kind : str,
             start_time : int
         ):
     
+        sprites = None
+        sprites_width = 0
+        sprites_height = 0
+        pop_duration = 0
+
+        if pop_kind == ALIEN_POP_KIND_ALIEN:
+            sprites = ALIEN_POP_SPRITES
+            sprites_width = ALIEN_POP_WIDTH
+            sprites_height = ALIEN_POP_HEIGHT
+            pop_duration = ALIEN_POP_DURATION
+        elif pop_kind == ALIEN_POP_KIND_UFO:
+            sprites = ALIEN_UFO_POP_SPRITES
+            sprites_width = ALIEN_UFO_POP_WIDTH
+            sprites_height = ALIEN_UFO_POP_HEIGHT
+            pop_duration = ALIEN_UFO_POP_DURATION
+
         super().__init__(
             context = context,
-            width = ALIEN_POP_WIDTH,
-            height = ALIEN_POP_HEIGHT,
+            width = sprites_width,
+            height = sprites_height,
             x = x,
             y = y,
             color = ALIEN_POP_COLOR,
-            animations = ALIEN_POP_SPRITES
+            animations = sprites
         )
 
+        self.pop_duration = pop_duration
         self.start_time = start_time
     
     def update(self):
         super().update()
 
-        if get_ticks() - self.start_time >= ALIEN_POP_DURATION:
+        if get_ticks() - self.start_time >= self.pop_duration:
             self.destroy()
 
 class AlienStorm(SpaceInvadersObject):
@@ -406,33 +432,59 @@ class UFO(SpaceInvadersObject):
                 self.rect.x += ALIEN_UFO_SPEED
     
     def pop(self) -> int:
-        UFOPop(self.context, self.rect.x, self.rect.y, get_ticks())
+        UFOPop(self.context, self.rect.x, self.rect.y, get_ticks(), self.pop_reward)
         self.destroy()
         return self.pop_reward
 
-class UFOPop(SpaceInvadersObject):
+class UFOPop(AlienPop):
     def __init__(
             self,
             context,
             x : int,
             y : int,
-            start_time : int
+            start_time : int,
+            pop_reward : int
         ):
-    
+
         super().__init__(
             context = context,
-            width = ALIEN_UFO_POP_WIDTH,
-            height = ALIEN_UFO_POP_HEIGHT,
             x = x,
             y = y,
-            color = ALIEN_UFO_POP_COLOR,
-            animations = ALIEN_UFO_POP_SPRITES
+            pop_kind = ALIEN_POP_KIND_UFO,
+            start_time = start_time
+        )
+
+        self.pop_reward = pop_reward
+
+    def destroy(self):
+        UFOPopScoreInfo(self.context, self.rect.x, self.rect.y, get_ticks(), self.pop_reward)
+        super().destroy()
+
+class UFOPopScoreInfo(SpaceInvadersObject):
+    def __init__(
+            self,
+            context,
+            x : int,
+            y : int,
+            start_time : int,
+            pop_reward : int
+        ):
+
+        self.text_pop_info = Text(context, x, y, str(pop_reward), ALIEN_UFO_POP_TEXT_FONT_COLOR)
+
+        super().__init__(
+            context = context,
+            width = self.text_pop_info.width,
+            height = FONT_CHAR_HEIGHT,
+            x = x,
+            y = y
         )
 
         self.start_time = start_time
-    
+
     def update(self):
         super().update()
 
-        if get_ticks() - self.start_time >= ALIEN_UFO_POP_DURATION:
+        if get_ticks() - self.start_time >= ALIEN_UFO_POP_TEXT_INFO_DURATION:
+            self.text_pop_info.destroy()
             self.destroy()

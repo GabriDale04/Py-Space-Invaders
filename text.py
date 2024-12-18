@@ -29,16 +29,16 @@ class TextChar(SpaceInvadersObject):
         if color != (255, 255, 255):
             sprite.surface = sprite.surface.convert_alpha()
 
-            for x in range(0, sprite.surface.get_width()):
-                for y in range(0, sprite.surface.get_height()):
-                    pixcol = sprite.surface.get_at((x, y))
+            for px in range(0, sprite.surface.get_width()):
+                for py in range(0, sprite.surface.get_height()):
+                    pixcol = sprite.surface.get_at((px, py))
 
                     if pixcol.a > 0:
                         pixcol.r = color[0]
                         pixcol.g = color[1]
                         pixcol.b = color[2]
                     
-                    sprite.surface.set_at((x, y), pixcol)
+                    sprite.surface.set_at((px, py), pixcol)
 
         super().__init__(
             context = context,
@@ -114,3 +114,6 @@ class Text:
     def set_text(self, text : str, color : tuple[int, int, int] = (255, 255, 255)):
         self.__destroy_chars()
         self.characters = self.__create_chars(self.x, self.y, text, color)
+
+    def destroy(self):
+        self.__destroy_chars()
