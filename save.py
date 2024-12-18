@@ -1,10 +1,7 @@
 import os
 
 def save_hi_score(score : int):
-    print("save")
-
     if not save_file_exists() or read_score() < score:
-        print("save2")
         with open("savefiles/hi_score", 'w') as file:
             file.write(str(score))
 
